@@ -1,47 +1,20 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"io"
-	"io/fs"
 	"math"
-	"os"
 	"sort"
-	"strconv"
-	"strings"
+
+	"github.com/Trashed/aoc2024/file"
 )
 
 func main() {
 
-	file, err := os.OpenFile("input.txt", os.O_RDONLY, fs.ModePerm)
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
+	// ========== Part one ============
 
-	distanceTotal := calcTotalDistance(readColumns(file))
+	distanceTotal := calcTotalDistance(file.ReadPuzzle("input.txt"))
 
 	fmt.Printf("Total distance is: %d\n", distanceTotal)
-}
-
-func readColumns(r io.Reader) ([]int, []int) {
-	col1, col2 := []int{}, []int{}
-
-	s := bufio.NewScanner(r)
-	for s.Scan() {
-		line := s.Text()
-
-		vals := strings.Split(line, "   ")
-		i1, _ := strconv.ParseInt(vals[0], 10, 64)
-		i2, _ := strconv.ParseInt(vals[1], 10, 64)
-
-		col1 = append(col1, int(i1))
-		col2 = append(col2, int(i2))
-
-	}
-
-	return col1, col2
 }
 
 func calcTotalDistance(inputs1, inputs2 []int) int {
