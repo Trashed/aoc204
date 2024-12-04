@@ -11,10 +11,11 @@ import (
 func main() {
 
 	// ========== Part one ============
+	col1, col2 := file.ReadPuzzle("input.txt")
+	fmt.Printf("Total distance is: %d\n", calcTotalDistance(col1, col2))
 
-	distanceTotal := calcTotalDistance(file.ReadPuzzle("input.txt"))
-
-	fmt.Printf("Total distance is: %d\n", distanceTotal)
+	// ========== Part two ============
+	fmt.Printf("Total similarity is: %d\n", calcTotalSimilarity(col1, col2))
 }
 
 func calcTotalDistance(inputs1, inputs2 []int) int {
@@ -33,4 +34,25 @@ func calcTotalDistance(inputs1, inputs2 []int) int {
 	}
 
 	return distance
+}
+
+func calcTotalSimilarity(inputs1, inputs2 []int) int {
+
+	totalSimilarity := 0
+
+	countOccurrance := func(v int, target []int) int {
+		occurrence := 0
+		for _, t := range target {
+			if v == t {
+				occurrence++
+			}
+		}
+		return v * occurrence
+	}
+
+	for _, v := range inputs1 {
+		totalSimilarity += countOccurrance(v, inputs2)
+	}
+
+	return totalSimilarity
 }
